@@ -76,6 +76,7 @@ export default {
    * fetches all the entries from specific content-type
    * @param {* content-type uid} contentTypeUid
    * @param {* reference field name} referenceFieldPath
+   * @param {* fields to be fetched} onlyFields
    * @param {* Json RTE path} jsonRtePath
    *
    */
