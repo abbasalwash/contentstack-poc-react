@@ -7,6 +7,7 @@ export const getHeaderRes = async () => {
   const response = (await Stack.getEntry({
     contentTypeUid: "header",
     referenceFieldPath: ["navigation_menu.page_reference"],
+    onlyFields: { reference_field_uid: "navigation_menu.page_reference", field_uids: ["title", "url"] },
     jsonRtePath: ["notification_bar.announcement_text"],
   })) as any;
   liveEdit && addEditableTags(response[0][0], "header", true);

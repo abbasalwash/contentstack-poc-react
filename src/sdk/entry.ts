@@ -5,12 +5,18 @@ import * as Utils from "@contentstack/utils";
 
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
 
+type OnlyField = {
+  reference_field_uid: string,
+  field_uids: string[]
+};
+
 type GetEntry = {
   contentTypeUid: string;
   referenceFieldPath: string[] | undefined;
+  onlyFields?: OnlyField | undefined;
   jsonRtePath: string[] | undefined;
 };
-
+  
 type GetEntryByUrl = {
   entryUrl: string | undefined;
   contentTypeUid: string;
@@ -73,10 +79,12 @@ export default {
    * @param {* Json RTE path} jsonRtePath
    *
    */
-  getEntry({ contentTypeUid, referenceFieldPath, jsonRtePath }: GetEntry) {
+  getEntry({ contentTypeUid, referenceFieldPath, onlyFields, jsonRtePath }: GetEntry) {
     return new Promise((resolve, reject) => {
       const query = Stack.ContentType(contentTypeUid).Query();
       if (referenceFieldPath) query.includeReference(referenceFieldPath);
+      if (onlyFields) query.only(onlyFields.reference_field_uid, onlyFields.field_uids);
+
       query
         .includeOwner()
         .toJSON()
