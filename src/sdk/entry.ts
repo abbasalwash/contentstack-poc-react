@@ -13,7 +13,7 @@ type OnlyField = {
 type GetEntry = {
   contentTypeUid: string;
   referenceFieldPath: string[] | undefined;
-  onlyFields?: OnlyField | undefined;
+  onlyFields?: OnlyField[] | undefined;
   jsonRtePath: string[] | undefined;
 };
   
@@ -84,7 +84,8 @@ export default {
     return new Promise((resolve, reject) => {
       const query = Stack.ContentType(contentTypeUid).Query();
       if (referenceFieldPath) query.includeReference(referenceFieldPath);
-      if (onlyFields) query.only(onlyFields.reference_field_uid, onlyFields.field_uids);
+      if (onlyFields) onlyFields.forEach(onlyField =>
+        query.only(onlyField.reference_field_uid, onlyField.field_uids));
 
       query
         .includeOwner()

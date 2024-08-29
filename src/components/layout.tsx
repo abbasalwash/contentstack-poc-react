@@ -3,18 +3,17 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Header from "./header";
 import Footer from "./footer";
 import DevTools from "./devtools";
-import { getHeaderRes, getFooterRes, getAllEntries } from "../helper";
+import { getHeaderRes, getFooterRes, getAllEntries, getGroupedNavigationRes } from "../helper";
 import { onEntryChange } from "../sdk/entry";
 import {
   EntryProps,
-  Entry,
-  NavLink,
-  Links,
   HeaderProps,
   FooterProps,
   NavmenuProps,
   HeadermenuProps,
 } from "../typescript/layout";
+import Navigation from "./navigation";
+import { GroupedNavigation } from "../typescript/generated";
 
 export default function Layout({ entry }: { entry: EntryProps }) {
   const history = useNavigate();
@@ -23,6 +22,7 @@ export default function Layout({ entry }: { entry: EntryProps }) {
     footer: {} as FooterProps,
     navHeaderList: {} as HeadermenuProps,
     navFooterList: {} as NavmenuProps,
+    navigation: {} as GroupedNavigation,
   });
   const mergeObjs = (...objs: any) => Object.assign({}, ...objs);
   const jsonObj = mergeObjs(
@@ -37,35 +37,17 @@ export default function Layout({ entry }: { entry: EntryProps }) {
     try {
       const header = await getHeaderRes();
       const footer = await getFooterRes();
-      const allEntry = await getAllEntries();
-      !header || (!footer && setError(true));
+      const navigation = await getGroupedNavigationRes();
+      !header || !navigation || (!footer && setError(true));
       const navHeaderList = header.navigation_menu;
       const navFooterList = footer.navigation.link;
-      if (allEntry.length !== header.navigation_menu.length) {
-        allEntry.forEach((entry: Entry) => {
-          const hFound = header.navigation_menu.find(
-            (navLink: NavLink) => navLink.label === entry.title
-          );
-          if (!hFound) {
-            navHeaderList.push({
-              label: entry.title,
-              page_reference: [{ title: entry.title, url: entry.url }],
-            });
-          }
-          const fFound = footer.navigation.link.find(
-            (link: Links) => link.title === entry.title
-          );
-          if (!fFound) {
-            navFooterList.push({ title: entry.title, href: entry.url });
-          }
-        });
-      }
 
       setLayout({
         header: header,
         footer: footer,
         navHeaderList,
         navFooterList,
+        navigation,
       });
     } catch (error) {
       setError(true);
@@ -74,18 +56,19 @@ export default function Layout({ entry }: { entry: EntryProps }) {
   }
 
   useEffect(() => {
-    onEntryChange(fetchData);
-  }, []);
+    !error && onEntryChange(fetchData);
 
-  useEffect(() => {
-    console.error("error...", error);
-    error && history("/error");
+    if (error) {
+      console.error("error...", error);
+      error && history("/error");      
+    }
   }, [error]);
 
   return (
     <div className='layout'>
       <Header header={getLayout.header} navMenu={getLayout.navHeaderList} />
       <DevTools response={jsonObj} />
+      <Navigation groupedNavigation={getLayout.navigation} />
       <Outlet />
       <Footer footer={getLayout.footer} navMenu={getLayout.navFooterList} />
     </div>

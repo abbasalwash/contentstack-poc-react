@@ -36,6 +36,19 @@ export interface Taxonomy {
   non_localizable: boolean;
 }
 
+export interface GroupedNavigationItem {
+  /** Version */
+  _version?: 1;
+  main_group?: {
+    title?: string;
+    page_reference?: Page[];
+    sub_group?: {
+      sub_title?: string;
+      sub_page_reference?: (BlogPost | Page)[];
+    }[];
+  }[];
+}
+
 export interface FileItem {
   /** Version */
   _version?: 1;
@@ -50,6 +63,13 @@ export interface Seo {
   meta_description?: string;
   keywords?: string;
   enable_search_indexing?: boolean;
+}
+
+export interface GroupedNavigation {
+  /** Version */
+  _version?: 2;
+  title: string;
+  global_grouped_navigation?: GroupedNavigationItem;
 }
 
 export interface FileItemType {
