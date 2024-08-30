@@ -37,29 +37,10 @@ export default function Layout({ entry }: { entry: EntryProps }) {
     try {
       const header = await getHeaderRes();
       const footer = await getFooterRes();
-      const allEntry = await getAllEntries();
+      
       !header || (!footer && setError(true));
       const navHeaderList = header.navigation_menu;
       const navFooterList = footer.navigation.link;
-      if (allEntry.length !== header.navigation_menu.length) {
-        allEntry.forEach((entry: Entry) => {
-          const hFound = header.navigation_menu.find(
-            (navLink: NavLink) => navLink.label === entry.title
-          );
-          if (!hFound) {
-            navHeaderList.push({
-              label: entry.title,
-              page_reference: [{ title: entry.title, url: entry.url }],
-            });
-          }
-          const fFound = footer.navigation.link.find(
-            (link: Links) => link.title === entry.title
-          );
-          if (!fFound) {
-            navFooterList.push({ title: entry.title, href: entry.url });
-          }
-        });
-      }
 
       setLayout({
         header: header,
@@ -74,12 +55,12 @@ export default function Layout({ entry }: { entry: EntryProps }) {
   }
 
   useEffect(() => {
-    onEntryChange(fetchData);
-  }, []);
-
-  useEffect(() => {
-    console.error("error...", error);
-    error && history("/error");
+    !error && onEntryChange(fetchData);
+    
+    if (error) { 
+        console.error("error...", error);
+        history("/error");
+    }
   }, [error]);
 
   return (

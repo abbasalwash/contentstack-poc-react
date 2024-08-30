@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
 import { FeaturedBlogProps } from "../typescript/blog";
+import Card from '../bng_components/Card';
 
 export default function BlogSection(props: FeaturedBlogProps) {
 
@@ -17,20 +18,24 @@ export default function BlogSection(props: FeaturedBlogProps) {
         )}
       </div>
       <div className='home-featured-blogs'>
+        
         {fromBlog.featured_blogs.map((blog) => (
-          <div className='featured-blog' key={blog.title}>
-            {blog.featured_image && <img src={blog.featured_image.url} alt={blog.featured_image.filename} className='blog-post-img' {...blog.featured_image.$?.url as {}} />}
-            <div className='featured-content'>
-              {blog.title && <h3 {...blog.$?.title}>{blog.title}</h3>}
+          <Card key={blog.title} className='featured-blog'>
+            <Card.Title abbas={blog.title} {...blog.$?.title}></Card.Title>
+          </Card>
+          // <div className='featured-blog' key={blog.title}>
+          //   {blog.featured_image && <img src={blog.featured_image.url} alt={blog.featured_image.filename} className='blog-post-img' {...blog.featured_image.$?.url as {}} />}
+          //   <div className='featured-content'>
+          //     {blog.title && <h3 {...blog.$?.title}>{blog.title}</h3>}
 
-              <div {...blog.$?.body as {}}>{blog.body && parse(blog.body.slice(0, 300))}</div>
-              {blog.url && (
-                <Link to={blog.url} className='blogpost-readmore'>
-                  {'Read More -->'}
-                </Link>
-              )}
-            </div>
-          </div>
+          //     <div {...blog.$?.body as {}}>{blog.body && parse(blog.body.slice(0, 300))}</div>
+          //     {blog.url && (
+          //       <Link to={blog.url} className='blogpost-readmore'>
+          //         {'Read More -->'}
+          //       </Link>
+          //     )}
+          //   </div>
+          // </div>
         ))}
       </div>
     </div>

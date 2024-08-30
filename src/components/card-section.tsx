@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CardProps } from "../typescript/card";
+import { CallToActionButtonComponent } from './call-to-action-button';
 
 export default function CardSection({ cards }: CardProps) {
 
@@ -12,9 +13,7 @@ export default function CardSection({ cards }: CardProps) {
           {card.description && <p {...card.$?.description as {}}>{card.description}</p>}
           <div className='card-cta'>
             {card.call_to_action.title && card.call_to_action.href && (
-              <Link to={card.call_to_action.href} className='btn primary-btn' {...card.call_to_action.$?.title}>
-                {card.call_to_action.title}
-              </Link>
+              <CallToActionButtonComponent {...card.call_to_action} />
             )}
           </div>
         </div>
