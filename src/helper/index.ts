@@ -3,11 +3,28 @@ import { addEditableTags } from "@contentstack/utils";
 
 const liveEdit = process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === "true";
 
+export const getGroupedNavigationRes = async () => {
+  const response = (await Stack.getEntry({
+    contentTypeUid: "grouped_navigation",
+    referenceFieldPath: [
+      "global_grouped_navigation.main_group.page_reference", 
+      "global_grouped_navigation.main_group.sub_group.sub_page_reference"
+    ],
+    onlyFields: [
+      { reference_field_uid: "global_grouped_navigation.main_group.page_reference", field_uids: ["title", "url"] },
+      { reference_field_uid: "global_grouped_navigation.main_group.sub_group.sub_page_reference", field_uids: ["title", "url"] }
+    ],
+    jsonRtePath: [],
+  })) as any;
+  liveEdit && addEditableTags(response[0][0], "grouped_navigation", true);
+  return response[0][0];
+};
+
 export const getHeaderRes = async () => {
   const response = (await Stack.getEntry({
     contentTypeUid: "header",
     referenceFieldPath: ["navigation_menu.page_reference"],
-    onlyFields: { reference_field_uid: "navigation_menu.page_reference", field_uids: ["title", "url"] },
+    onlyFields: [{ reference_field_uid: "navigation_menu.page_reference", field_uids: ["title", "url"] }],
     jsonRtePath: ["notification_bar.announcement_text"],
   })) as any;
   liveEdit && addEditableTags(response[0][0], "header", true);
