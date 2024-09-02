@@ -9,7 +9,8 @@ import BlogSection from "./blog-section";
 import SectionBucket from "./section-bucket";
 import AboutSectionBucket from "./about-section-bucket";
 import SectionWithHtmlCode from "./section-with-html-code";
-import { RenderProps } from "../typescript/component";
+import { GroupedRelatedFile, RenderProps } from "../typescript/component";
+import FileItemComponent from "./file-item-component";
 
 export default function RenderComponents(props: RenderProps) {
     
@@ -76,6 +77,23 @@ export default function RenderComponents(props: RenderProps) {
               ourTeam={component.our_team}
               key={`component-${key}`}
             />
+          );
+        }
+        if (component.grouped_related_documents) {
+          const fileList = component
+            .grouped_related_documents
+            .files?.map((groupedFile: GroupedRelatedFile, index: number) => {
+              return (
+                <FileItemComponent {...groupedFile} key={"grouped_related_document_" + index} />
+              );
+            });
+
+          return (
+            <div className='related-documents-section' key="grouped_related_documents">
+              <div className='related-documents-content'>
+                {fileList}
+              </div>
+            </div>
           );
         }
       })}

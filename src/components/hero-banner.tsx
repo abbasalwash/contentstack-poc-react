@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { BannerProps } from "../typescript/banner";
-import { CallToActionButton } from '../bng_components/CallToActionButton';
-import { CallToActionButtonComponent } from './call-to-action-button';
+import { CallToActionButton } from './call-to-action-button';
 
 export default function HeroBanner(props: BannerProps) {
   const banner = props.hero_banner;
@@ -35,7 +34,7 @@ export default function HeroBanner(props: BannerProps) {
           ''
         )}
         {banner.call_to_action.title && banner.call_to_action.href ? (
-          <CallToActionButtonComponent {...banner.call_to_action} />
+          <CallToActionButton {...banner.call_to_action} />
         ) : (
           ''
         )}

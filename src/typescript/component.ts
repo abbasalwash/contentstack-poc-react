@@ -71,6 +71,33 @@ export type Component = {
   section_with_html_code?: ObjectProps;
   our_team?: TeamProps;
   widget?: Widget;
+  related_documents?: RelatedFile
+  grouped_related_documents?: GroupedRelatedFiles
+}
+
+export type RelatedFile = {
+  title: string,
+  file: FileAsset,
+  $: Object
+}
+
+export type GroupedRelatedFiles = {
+  files?: GroupedRelatedFile[]
+}
+
+export type GroupedRelatedFile = {
+  title: string,
+  file_asset: FileAsset,
+  $: Object
+}
+
+export type FileAsset = {
+  content_type:string,
+  file_size:string,
+  file_name: string,
+  title: string,
+  url: string,
+  $: Object
 }
 
 export type SectionWithBucket = {

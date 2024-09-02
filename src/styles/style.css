@@ -539,7 +539,7 @@ footer a {
 .about-team-section {
   background: #f7f7f7;
   text-align: center;
-}
+} 
 
 .story-content {
   text-align: left;
@@ -569,6 +569,30 @@ footer a {
 
 .team-details {
   padding: 0px 15px;
+}
+
+/* related documents */
+
+.related-documents-section {
+  background: #f7f7f7;
+  text-align: center;
+}
+
+.related-documents-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.bng-file-item-component {  
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #b4b4b4;
+  border-radius: 4px;
+  text-align: left;
+  margin: 16px;
+  padding-right: 8px;
 }
 
 /* contact page */

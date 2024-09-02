@@ -1,3 +1,4 @@
+import React from "react";
 import { formatFileSizeFromBytes } from "../helper/file";
 
 export interface IFileItem {
@@ -12,12 +13,12 @@ const BngFileItemComponent = (props: IFileItem) => {
     const fileSize = formatFileSizeFromBytes(parseFloat(props.fileSizeInBytes));
 
     return (
-        <div className="d-flex flex-row border py-2 pe-2 shadow-sm rounded">
+        <div className="bng-file-item-component">
             <img src={props.icon} alt={props.helpDescription} />
             <div>
                 <strong>{props.title}</strong>
                 <div>{fileSize}</div>
-                <a href={props.url} target="_blank" className="button-link download">Download</a>
+                <a href={props.url} target="_blank" rel="noreferrer" className="button-link download">Download</a>
             </div>
         </div>
     ); 

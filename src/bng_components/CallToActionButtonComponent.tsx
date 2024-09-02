@@ -7,7 +7,7 @@ type CallToActionButtonType = {
     url: string
 }
 
-export function CallToActionButton(props: CallToActionButtonType) {
+export function CallToActionButtonComponent(props: CallToActionButtonType) {
   const extraParameter = useExtraParameterCtx();
   console.log("BNG Component");
   console.log(extraParameter);
