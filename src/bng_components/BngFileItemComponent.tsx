@@ -1,5 +1,6 @@
 import React from "react";
 import { formatFileSizeFromBytes } from "../helper/file";
+import { useExtraParameterCtx } from "../context/extra-parameters-provider";
 
 export interface IFileItem {
     icon: string
@@ -10,10 +11,11 @@ export interface IFileItem {
 }
 
 const BngFileItemComponent = (props: IFileItem) => {    
+    const extraParameter = useExtraParameterCtx();
     const fileSize = formatFileSizeFromBytes(parseFloat(props.fileSizeInBytes));
 
     return (
-        <div className="bng-file-item-component">
+        <div {...extraParameter} className="bng-file-item-component">
             <img src={props.icon} alt={props.helpDescription} />
             <div>
                 <strong>{props.title}</strong>

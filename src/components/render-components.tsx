@@ -11,6 +11,7 @@ import AboutSectionBucket from "./about-section-bucket";
 import SectionWithHtmlCode from "./section-with-html-code";
 import { GroupedRelatedFile, RenderProps } from "../typescript/component";
 import FileItemComponent from "./file-item-component";
+import { ExtraParametersProvider } from "../context/extra-parameters-provider";
 
 export default function RenderComponents(props: RenderProps) {
     
@@ -84,7 +85,9 @@ export default function RenderComponents(props: RenderProps) {
             .grouped_related_documents
             .files?.map((groupedFile: GroupedRelatedFile, index: number) => {
               return (
-                <FileItemComponent {...groupedFile} key={"grouped_related_document_" + index} />
+                <ExtraParametersProvider {...groupedFile.$?.title as {}} key={"grouped_related_document_" + index}>
+                  <FileItemComponent {...groupedFile} />
+                </ExtraParametersProvider>
               );
             });
 
