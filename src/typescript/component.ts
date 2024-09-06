@@ -71,14 +71,19 @@ export type Component = {
   section_with_html_code?: ObjectProps;
   our_team?: TeamProps;
   widget?: Widget;
-  related_documents?: RelatedFile
+  related_documents?: RelatedDocument
   grouped_related_documents?: GroupedRelatedFiles
+  related_files: RelatedFiles
 }
 
-export type RelatedFile = {
+export type RelatedDocument = {
   title: string,
   file: FileAsset,
   $: Object
+}
+
+export type RelatedFiles = {
+  file_reference?: GroupedRelatedFile[]
 }
 
 export type GroupedRelatedFiles = {
@@ -87,7 +92,7 @@ export type GroupedRelatedFiles = {
 
 export type GroupedRelatedFile = {
   title: string,
-  file_asset: FileAsset,
+  file: FileAsset,
   $: Object
 }
 

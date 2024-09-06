@@ -8,8 +8,8 @@ function FileItemComponent (props: GroupedRelatedFile) {
             icon="/assets/icons/pdf-file-icon.svg"
             title={props.title}
             helpDescription={props.title}
-            fileSizeInBytes={props.file_asset!.file_size}
-            url={props.file_asset!.url} />
+            fileSizeInBytes={props.file.file_size}
+            url={props.file.url} />
     );
 }
 

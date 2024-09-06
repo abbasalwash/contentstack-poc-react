@@ -55,7 +55,10 @@ export const getPageRes = async (entryUrl: string) => {
   const response = (await Stack.getEntryByUrl({
     contentTypeUid: "page",
     entryUrl,
-    referenceFieldPath: ["page_components.from_blog.featured_blogs"],
+    referenceFieldPath: [
+      "page_components.from_blog.featured_blogs",
+      "page_components.related_files.file_reference"
+    ],
     jsonRtePath: [
       "page_components.from_blog.featured_blogs.body",
       "page_components.section_with_buckets.buckets.description",

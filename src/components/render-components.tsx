@@ -93,6 +93,27 @@ export default function RenderComponents(props: RenderProps) {
 
           return (
             <div className='related-documents-section' key="grouped_related_documents">
+              <h3>Grouped Related Files</h3>
+              <div className='related-documents-content'>
+                {fileList}
+              </div>
+            </div>
+          );
+        }
+        if (component.related_files) {
+          const fileList = component
+            .related_files
+            .file_reference?.map((file: GroupedRelatedFile, index: number) => {
+              return (
+                <ExtraParametersProvider {...file.$?.title as {}} key={"related_files_" + index}>
+                  <FileItemComponent {...file} />
+                </ExtraParametersProvider>
+              );
+            });
+
+          return (
+            <div className='related-documents-section' key="related_files_section">
+              <h3>Related Files</h3>
               <div className='related-documents-content'>
                 {fileList}
               </div>
